@@ -1,34 +1,12 @@
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
 public class ShoppingList {
-
-	// private static int getValidMenuChoice(Scanner scnr, LinkedHashMap<String,
-	// Double> inventory) {
-	// int menuChoice = 0;
-	// boolean inputIsValid = false;
-	// do {
-	// try {
-	// menuChoice = scnr.nextInt();
-	// validateChoiceInMenu(menuChoice, inventory.size());
-	// inputIsValid = true;
-	// } catch (InputMismatchException | IllegalArgumentException ex) {
-	// System.out.println("Sorry, you must enter a number between 1 and " +
-	// inventory.size() + ": ");
-	// }
-	// scnr.nextLine(); /* clear garbage */
-	// } while (!inputIsValid);
-	// return menuChoice;
-	// }
-	//
-	// public static void validateChoiceInMenu(int input, int menuLength) {
-	// if (input < 1 || input > menuLength) {
-	// throw new IllegalArgumentException();
-	// }
-	// }
 
 	public static void main(String[] args) {
 		Scanner scnr = new Scanner(System.in);
@@ -39,30 +17,82 @@ public class ShoppingList {
 		// Build Inventory
 		LinkedHashMap<String, Double> inventory = buildInventory();
 
-		// Display Inventory
-		displayInventory(inventory);
-
-		// Get User Choice
-		// TODO take and validate user input
-		int userInput = 2;
-
-		// Retrieve entry of chosen item
-		Entry<String, Double> purchasedItem = getSelectedItem(inventory, userInput);
-
-		// Add that to a shoppingCart
-
+		// Build Shopping Cart
 		ArrayList<Integer> itemQuantities = new ArrayList<Integer>();
 		ArrayList<String> items = new ArrayList<String>();
 		ArrayList<Double> prices = new ArrayList<Double>();
 
-		// if Arrays.asList(yourArray).contains(yourValue)
-		// don't add the item, update the quantity
-		// else, add the items
-		
-		items.add("Great Ball");
-		prices.add(600.0);
-		itemQuantities.add(1);
+		// SHOPPING LOOP
 
+		boolean doneShopping = true;
+		do {
+			// Get User Choice
+			int itemNumber = getValidItemNumberChoice(scnr, inventory);
+
+			// Retrieve entry of chosen item
+			Entry<String, Double> purchasedItem = getSelectedItem(inventory, itemNumber);
+
+			// Add that entry to the shopping cart
+			updateShoppingCart(purchasedItem, itemQuantities, items, prices);
+
+			// Display the shopping cart
+			displayShoppingCart(itemQuantities, items, prices);
+
+			System.out.println("\nWould you like to buy more items? (Y/n): ");
+			doneShopping = (scnr.nextLine().toLowerCase().trim().equals("n"));
+
+		} while (!doneShopping);
+
+		scnr.close();
+	}
+
+	private static void displayShoppingCart(ArrayList<Integer> itemQuantities, ArrayList<String> items,
+			ArrayList<Double> prices) {
+		// TODO ADD STRING FORMATTING
+		System.out.println("Your Shopping Cart:");
+		System.out.println("#. Item\t\t\tPrice");
+		System.out.println("=============================");
+		if (items.isEmpty()) {
+			System.out.println("Empty!");
+		} else {
+			for (int i = 0; i < items.size(); i++) {
+//				System.out.println((i + 1) + ". " + items.get(i) + "(x" + itemQuantities.get(i) + ")\t\t"
+//						+ (prices.get(i) * itemQuantities.get(i)));
+				System.out.printf("%d. %s(x%d)" + "%11s",
+						(i+1),
+						items.get(i),
+						itemQuantities.get(i),
+						(prices.get(i) * itemQuantities.get(i)));
+				System.out.println();
+			}
+		}
+	}
+
+	private static int getValidItemNumberChoice(Scanner scnr, LinkedHashMap<String, Double> inventory) {
+		int itemChoice = 0;
+		boolean inputIsValid = false;
+		displayInventory(inventory);
+
+		do {
+			try {
+				itemChoice = Integer.parseInt(scnr.nextLine());
+				validateChoiceInInventory(itemChoice, inventory.size());
+				inputIsValid = true;
+			} catch (InputMismatchException | IllegalArgumentException ex) {
+				System.out.println("Sorry, you must enter a number between 1 and " + inventory.size() + ": ");
+			}
+		} while (!inputIsValid);
+		return itemChoice;
+	}
+
+	public static void validateChoiceInInventory(int userInput, int inventoryLength) {
+		if (userInput < 1 || userInput > inventoryLength) {
+			throw new IllegalArgumentException();
+		}
+	}
+
+	private static void updateShoppingCart(Entry<String, Double> purchasedItem, ArrayList<Integer> itemQuantities,
+			ArrayList<String> items, ArrayList<Double> prices) {
 		if (items.contains(purchasedItem.getKey())) {
 			// do some fancy stuff
 			itemQuantities.set(items.indexOf(purchasedItem.getKey()),
@@ -72,12 +102,6 @@ public class ShoppingList {
 			items.add(purchasedItem.getKey());
 			prices.add(purchasedItem.getValue());
 		}
-
-		System.out.println(itemQuantities);
-		System.out.println(items);
-		System.out.println(prices);
-
-		scnr.close();
 	}
 
 	private static Entry<String, Double> getSelectedItem(LinkedHashMap<String, Double> inventory, int userInput) {
@@ -103,6 +127,7 @@ public class ShoppingList {
 			System.out.printf("%d. " + product.getKey() + "\t\t" + product.getValue() + "%n", i);
 			i++;
 		}
+		System.out.println("\nEnter a number 1-" + inventory.size() + " to add an item to your shopping cart!");
 	}
 
 	private static LinkedHashMap<String, Double> buildInventory() {
