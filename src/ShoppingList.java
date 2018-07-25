@@ -1,6 +1,4 @@
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
@@ -26,22 +24,28 @@ public class ShoppingList {
 		shoppingLoop(scnr, inventory, itemQuantities, items, prices);
 
 		// Display Checkout Information
-		
-		// Calculate Shopping Cart Total
-		double total = calculateCartTotal(itemQuantities, items, prices);
-		
-		// Calculate Average Item Price
-		double averageItemPrice = calculateAverageItemPrice(items, prices);
-			
-		System.out.println(total);
-		System.out.println(averageItemPrice);
-		
-		
+		displayCheckoutInformation(itemQuantities, items, prices);
+
 		scnr.close();
 	}
-	
+
+	private static void displayCheckoutInformation(ArrayList<Integer> itemQuantities, ArrayList<String> items,
+			ArrayList<Double> prices) {
+		// Calculate Shopping Cart Total
+		double total = calculateCartTotal(itemQuantities, items, prices);
+
+		// Calculate Average Item Price
+		double averageItemPrice = calculateAverageItemPrice(items, prices);
+
+		System.out.println("\nThanks for shopping with us! Here's your final Order:\n");
+		displayShoppingCart(itemQuantities, items, prices);
+		System.out.println("\nYour total was: " + total);
+		System.out.println("The average item price (disregarding quantity) was: " + averageItemPrice);
+		// TODO: ADD MOST AND LEAST EXPENSIVE ITEMS
+	}
+
 	private static double calculateAverageItemPrice(ArrayList<String> items, ArrayList<Double> prices) {
-		double sumItems = 0.0;	
+		double sumItems = 0.0;
 		for (double price : prices) {
 			sumItems += price;
 		}
