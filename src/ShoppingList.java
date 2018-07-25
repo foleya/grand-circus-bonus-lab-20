@@ -17,13 +17,49 @@ public class ShoppingList {
 		// Build Inventory
 		LinkedHashMap<String, Double> inventory = buildInventory();
 
-		// Build Shopping Cart
+		// Declare Shopping Cart ArrayLists
 		ArrayList<Integer> itemQuantities = new ArrayList<Integer>();
 		ArrayList<String> items = new ArrayList<String>();
 		ArrayList<Double> prices = new ArrayList<Double>();
 
-		// SHOPPING LOOP
+		// Enter Shopping Loop
+		shoppingLoop(scnr, inventory, itemQuantities, items, prices);
 
+		// Display Checkout Information
+		
+		// Calculate Shopping Cart Total
+		double total = calculateCartTotal(itemQuantities, items, prices);
+		
+		// Calculate Average Item Price
+		double averageItemPrice = calculateAverageItemPrice(items, prices);
+			
+		System.out.println(total);
+		System.out.println(averageItemPrice);
+		
+		
+		scnr.close();
+	}
+	
+	private static double calculateAverageItemPrice(ArrayList<String> items, ArrayList<Double> prices) {
+		double sumItems = 0.0;	
+		for (double price : prices) {
+			sumItems += price;
+		}
+		return sumItems / items.size();
+	}
+
+	private static double calculateCartTotal(ArrayList<Integer> itemQuantities, ArrayList<String> items,
+			ArrayList<Double> prices) {
+		double total = 0.0;
+		for (int i = 0; i < items.size(); i++) {
+			// do some fancy stuff
+			total += prices.get(i) * itemQuantities.get(i);
+		}
+		return total;
+	}
+
+	private static void shoppingLoop(Scanner scnr, LinkedHashMap<String, Double> inventory,
+			ArrayList<Integer> itemQuantities, ArrayList<String> items, ArrayList<Double> prices) {
 		boolean doneShopping = true;
 		do {
 			// Get User Choice
@@ -42,13 +78,11 @@ public class ShoppingList {
 			doneShopping = (scnr.nextLine().toLowerCase().trim().equals("n"));
 
 		} while (!doneShopping);
-
-		scnr.close();
 	}
 
 	private static void displayShoppingCart(ArrayList<Integer> itemQuantities, ArrayList<String> items,
 			ArrayList<Double> prices) {
-		// TODO ADD STRING FORMATTING
+		// TODO ADD STRING FORMATTING FOR THE HEADERS
 		System.out.println("Your Shopping Cart:");
 		System.out.println("#. Item\t\t\tPrice");
 		System.out.println("=============================");
@@ -56,12 +90,7 @@ public class ShoppingList {
 			System.out.println("Empty!");
 		} else {
 			for (int i = 0; i < items.size(); i++) {
-//				System.out.println((i + 1) + ". " + items.get(i) + "(x" + itemQuantities.get(i) + ")\t\t"
-//						+ (prices.get(i) * itemQuantities.get(i)));
-				System.out.printf("%d. %s(x%d)" + "%11s",
-						(i+1),
-						items.get(i),
-						itemQuantities.get(i),
+				System.out.printf("%-23s%6.1f", (i + 1) + ". " + items.get(i) + "(" + itemQuantities.get(i) + "x)",
 						(prices.get(i) * itemQuantities.get(i)));
 				System.out.println();
 			}
@@ -119,6 +148,7 @@ public class ShoppingList {
 	}
 
 	private static void displayInventory(LinkedHashMap<String, Double> inventory) {
+		// TODO: ADD STRING FORMATTING FOR THE HEADERS
 		System.out.println("#. Item\t\t\tPrice");
 		System.out.println("=============================");
 
@@ -146,21 +176,5 @@ public class ShoppingList {
 		};
 		return inventory;
 	}
-
-	// ITEM SELECTION LOOP
-
-	// DISPLAY A LIST OF ITEMS & PRICES //
-
-	// CHOICE VALIDATION LOOP
-
-	// LET USER CHOOSE AN ITEM
-
-	// VALIDATE ITEM EXISTS
-
-	// ADD ITEM-PRICE TO USER'S ORDER
-
-	// DISPLAY USER'S ORDER (ITEMS AND PRICES)
-
-	// DISPLAY AVERAGE PRICE OF ITEM
 
 }
