@@ -50,11 +50,28 @@ public class ShoppingList {
 		// Display average
 		System.out.printf("Your average item price was: %.2f%n", averageItemPrice);
 
+		// TODO: REFACTOR THIS MESS
+		// MAX
+		int maxIndex = 0;
+		int minIndex = 0;
+		
+		for (int i = 0; i < prices.size(); i++) {
+			if (prices.get(i) == Collections.max(prices)) {
+				maxIndex = i;
+			}
+		}
+		
+		for (int i = 0; i < prices.size(); i++) {
+			if (prices.get(i) == Collections.min(prices)) {
+				minIndex = i;
+			}
+		}
+		
 		// Display max
-		System.out.println("The most expensive item cost: " + Collections.max(prices));
+		System.out.printf("The most expensive item (%s) cost: %.2f%n", items.get(maxIndex), prices.get(maxIndex));
 
 		// Display min
-		System.out.println("The least expensive item cost: " + Collections.min(prices));
+		System.out.printf("The most expensive item (%s) cost: %.2f%n", items.get(minIndex), prices.get(minIndex));
 
 	}
 
