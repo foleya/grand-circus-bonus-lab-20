@@ -74,7 +74,7 @@ public class ShoppingList {
 		System.out.printf("The most expensive item (%s) cost: %.2f%n", items.get(maxIndex), prices.get(maxIndex));
 
 		// Display min
-		System.out.printf("The most expensive item (%s) cost: %.2f%n", items.get(minIndex), prices.get(minIndex));
+		System.out.printf("The least expensive item (%s) cost: %.2f%n", items.get(minIndex), prices.get(minIndex));
 
 	}
 
