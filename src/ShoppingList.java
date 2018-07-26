@@ -35,21 +35,24 @@ public class ShoppingList {
 		double total = calculateCartTotal(itemQuantities, items, prices);
 
 		// Calculate Average Item Price
-		double averageItemPrice = calculateAverageItemPrice(items, prices);
+		double averageItemPrice = calculateAverageItemPrice(itemQuantities, prices);
 
 		System.out.println("\nThanks for shopping with us! Here's your final Order:\n");
 		displayShoppingCart(itemQuantities, items, prices);
 		System.out.println("\nYour total was: " + total);
-		System.out.println("The average item price (disregarding quantity) was: " + averageItemPrice);
+		System.out.println("Your average item price was: " + averageItemPrice);
 		// TODO: ADD MOST AND LEAST EXPENSIVE ITEMS
 	}
 
-	private static double calculateAverageItemPrice(ArrayList<String> items, ArrayList<Double> prices) {
+	private static double calculateAverageItemPrice(ArrayList<Integer> itemQuantities, ArrayList<Double> prices) {
 		double sumItems = 0.0;
-		for (double price : prices) {
-			sumItems += price;
+		int totalItems = 0;
+		for (int i = 0; i < prices.size(); i++) {
+			sumItems += prices.get(i) * itemQuantities.get(i);
+			totalItems += itemQuantities.get(i);
 		}
-		return sumItems / items.size();
+		return sumItems / totalItems;
+
 	}
 
 	private static double calculateCartTotal(ArrayList<Integer> itemQuantities, ArrayList<String> items,
