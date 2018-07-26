@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.InputMismatchException;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
@@ -39,9 +40,18 @@ public class ShoppingList {
 
 		System.out.println("\nThanks for shopping with us! Here's your final Order:\n");
 		displayShoppingCart(itemQuantities, items, prices);
+		// Display total
 		System.out.println("\nYour total was: " + total);
-		System.out.println("Your average item price was: " + averageItemPrice);
-		// TODO: ADD MOST AND LEAST EXPENSIVE ITEMS
+		
+		// Display average
+		System.out.printf("Your average item price was: %.2f%n", averageItemPrice);
+		
+		// Display max
+		System.out.println("The most expensive item cost: " + Collections.max(prices));
+		
+		// Display min
+		System.out.println("The least expensive item cost: " + Collections.min(prices));
+		
 	}
 
 	private static double calculateAverageItemPrice(ArrayList<Integer> itemQuantities, ArrayList<Double> prices) {
