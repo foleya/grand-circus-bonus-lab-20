@@ -8,6 +8,10 @@ import java.util.Scanner;
 public class ShoppingList {
 
 	public static void main(String[] args) {
+		shoppingApp();
+	}
+
+	private static void shoppingApp() {
 		Scanner scnr = new Scanner(System.in);
 
 		// Welcome
@@ -42,16 +46,16 @@ public class ShoppingList {
 		displayShoppingCart(itemQuantities, items, prices);
 		// Display total
 		System.out.println("\nYour total was: " + total);
-		
+
 		// Display average
 		System.out.printf("Your average item price was: %.2f%n", averageItemPrice);
-		
+
 		// Display max
 		System.out.println("The most expensive item cost: " + Collections.max(prices));
-		
+
 		// Display min
 		System.out.println("The least expensive item cost: " + Collections.min(prices));
-		
+
 	}
 
 	private static double calculateAverageItemPrice(ArrayList<Integer> itemQuantities, ArrayList<Double> prices) {
