@@ -30,6 +30,9 @@ public class ShoppingList {
 
 		// Display Checkout Information
 		displayCheckoutInformation(itemQuantities, items, prices);
+		
+		// Say Goodbye!
+		System.out.println("\nThanks for shopping with us!");
 
 		scnr.close();
 	}
@@ -50,23 +53,23 @@ public class ShoppingList {
 		// Display average
 		System.out.printf("Your average item price was: %.2f%n", averageItemPrice);
 
-		// TODO: REFACTOR THIS MESS
-		// MAX
+		// Determine max and min items
+		// TODO: REFACTOR THIS MESS ... could make one method that returns a HashMap { max: int, min: int }
 		int maxIndex = 0;
 		int minIndex = 0;
-		
+
 		for (int i = 0; i < prices.size(); i++) {
 			if (prices.get(i) == Collections.max(prices)) {
 				maxIndex = i;
 			}
 		}
-		
+
 		for (int i = 0; i < prices.size(); i++) {
 			if (prices.get(i) == Collections.min(prices)) {
 				minIndex = i;
 			}
 		}
-		
+
 		// Display max
 		System.out.printf("The most expensive item (%s) cost: %.2f%n", items.get(maxIndex), prices.get(maxIndex));
 
