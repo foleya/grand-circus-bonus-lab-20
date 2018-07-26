@@ -1,3 +1,5 @@
+/* Written by @AndrewFoley on 7/26/18 */
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.InputMismatchException;
@@ -32,7 +34,7 @@ public class ShoppingList {
 		displayCheckoutInformation(itemQuantities, items, prices);
 		
 		// Say Goodbye!
-		System.out.println("\nThanks for shopping with us!");
+		System.out.println("\nGoodbye! You're my best friend in a world we must defend!");
 
 		scnr.close();
 	}
